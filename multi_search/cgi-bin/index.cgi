@@ -26,7 +26,7 @@ output = tp.render(
     page1="http://www.ftumn.shop/multi_search/cgi-bin/rakuten?keyword=" + keyword,
     page2="http://www.ftumn.shop/multi_search/cgi-bin/amazon?keyword=" + keyword,
     page3="http://www.ftumn.shop/multi_search/cgi-bin/yahoo?keyword=" + keyword,
-    page4="http://www.ftumn.shop/multi_search/cgi-bin/yahoo?keyword=" + keyword,
+    page4="http://www.ftumn.shop/multi_search/cgi-bin/kakaku?keyword=" + keyword,
 )
 
 print("Content-Type: text/html")

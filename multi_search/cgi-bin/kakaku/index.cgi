@@ -1,12 +1,11 @@
 #!/virtual/ftumn/dev/venv/bin/python3
 # -*- coding: UTF-8 -*-
 import cgi
-import sys
 import cgitb
 import requests
+import sys
 import os
 import urllib.parse
-
 
 cgitb.enable()
 
@@ -34,9 +33,9 @@ headers["Accept-Encoding"] = ""
 
 
 r = requests.get(
-    url="https://www.maruo.co.jp/_hmas/hmas2.aspx?k={}".format(urllib.parse.quote(keyword)),
+    url="https://search.kakaku.com/{}".format(urllib.parse.quote(keyword)),
     headers=headers,
-    timeout=25,
+    timeout=30,
 )
 
 for k, v in r.headers.items():
