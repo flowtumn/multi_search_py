@@ -5,9 +5,34 @@ import cgitb
 import math
 import json
 import requests
+import os
+
 
 cgitb.enable()
 
-print("Content-Type: text/html")
+
+req_params = cgi.parse()
+keyword = req_params["keyword"][0]
+
+
+r = requests.get(
+    url="https://shopping.yahoo.co.jp/search?p={}".format(keyword),
+    headers={
+        e[5:]: v
+        for e, v in os.environ.items()
+        if e in [
+            "HTTP_USER_AGENT",
+            "HTTP_ACCEPT",
+            "HTTP_ACCEPT_ENCODING",
+            "HTTP_ACCEPT_LANGUAGE",
+            "HTTP_COOKIE",
+        ]
+    },
+    timeout=10,
+)
+
+for k, v in r.headers.items():
+    print ("{}: {}".format(k, v))
+
 print()
-print ("HELLO")
+print (r.text)
