@@ -6,7 +6,7 @@ import cgitb
 import os
 import urllib.parse
 
-sys.path.append(os.path.join(os.path.dirname(__file__), '../'))
+sys.path.append(os.path.join(os.path.dirname(__file__), '../../'))
 from util import get_logger, cgi_debug_wrapper, default_cgi_request_header, process_cgi_request
 
 
