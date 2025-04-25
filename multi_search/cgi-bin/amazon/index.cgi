@@ -1,46 +1,33 @@
 #!/virtual/ftumn/dev/venv/bin/python3
 # -*- coding: UTF-8 -*-
-import cgi
 import sys
+import cgi
 import cgitb
-import requests
 import os
 import urllib.parse
 
-
-cgitb.enable()
-
-
-req_params = cgi.parse()
-keyword = req_params["keyword"][0]
-
-headers={
-    e[5:].replace("_", "-"): v
-    for e, v in os.environ.items()
-    if e in [
-        "HTTP_USER_AGENT",
-        "HTTP_ACCEPT",
-        "HTTP_ACCEPT_ENCODING",
-        "HTTP_ACCEPT_LANGUAGE",
-        "HTTP_COOKIE",
-        "HTTP_CONNECTION",
-        "HTTP_UPGRADE_INSECURE_REQUESTS",
-        "HTTP_REFERER",
-        "HTTP_PRAGMA",
-        "HTTP_CACHE_CONTROL",
-    ]
-}
-headers["Accept-Encoding"] = ""
+sys.path.append(os.path.join(os.path.dirname(__file__), '../'))
+from util import get_logger, cgi_debug_wrapper, default_cgi_request_header, process_cgi_request
 
 
-r = requests.get(
-    url="https://www.maruo.co.jp/_hmas/hmas2.aspx?k={}".format(urllib.parse.quote(keyword)),
-    headers=headers,
-    timeout=25,
-)
+logger = get_logger(logger_name=os.path.abspath(__file__).split("/")[-2], output_dir="./")
 
-for k, v in r.headers.items():
-    print ("{}: {}".format(k, v))
 
-print("", flush=True) 
-sys.stdout.buffer.write(r.content)
+@cgi_debug_wrapper
+def main():
+    cgitb.enable()
+
+    req_params = cgi.parse()
+    keyword = req_params["keyword"][0]
+
+    process_cgi_request(
+        url="https://www.maruo.co.jp/_hmas/hmas2.aspx?k={}".format(urllib.parse.quote(keyword)),
+        headers=default_cgi_request_header(),
+    )
+
+    logger.info("success: keyword: {}".format(keyword))
+
+
+if __name__ == '__main__':
+    main()
+

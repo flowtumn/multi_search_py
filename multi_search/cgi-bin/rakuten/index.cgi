@@ -3,53 +3,31 @@
 import sys
 import cgi
 import cgitb
-import requests
 import os
 import urllib.parse
-import logging
-from logging.handlers import RotatingFileHandler
+
+sys.path.append(os.path.join(os.path.dirname(__file__), '../'))
+from util import get_logger, cgi_debug_wrapper, default_cgi_request_header, process_cgi_request
 
 
-cgitb.enable()
+logger = get_logger(logger_name=os.path.abspath(__file__).split("/")[-2], output_dir="./")
 
+
+@cgi_debug_wrapper
 def main():
+    cgitb.enable()
+
     req_params = cgi.parse()
     keyword = req_params["keyword"][0]
 
-    headers={
-        e[5:].replace("_", "-"): v
-        for e, v in os.environ.items()
-        if e in [
-            "HTTP_USER_AGENT",
-            "HTTP_ACCEPT",
-            "HTTP_ACCEPT_ENCODING",
-            "HTTP_ACCEPT_LANGUAGE",
-            "HTTP_COOKIE",
-            "HTTP_CONNECTION",
-            "HTTP_UPGRADE_INSECURE_REQUESTS",
-            "HTTP_REFERER",
-            "HTTP_PRAGMA",
-            "HTTP_CACHE_CONTROL",
-        ]
-    }
-    headers["Accept-Encoding"] = ""
-
-    r = requests.get(
+    process_cgi_request(
         url="https://search.rakuten.co.jp/search/mall/{}".format(urllib.parse.quote(keyword)),
-        headers=headers,
-        timeout=25,
+        headers=default_cgi_request_header(),
     )
 
-    for k, v in r.headers.items():
-        print ("{}: {}".format(k, v))
+    logger.info("success: keyword: {}".format(keyword))
 
-    print("", flush=True) 
-    sys.stdout.buffer.write(r.content)
 
-try:
+if __name__ == '__main__':
     main()
-except Exception as e:
-    print("Content-Type: text/html")
-    print()
-    print (e)
 

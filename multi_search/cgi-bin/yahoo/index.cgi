@@ -1,47 +1,33 @@
 #!/virtual/ftumn/dev/venv/bin/python3
 # -*- coding: UTF-8 -*-
+import sys
 import cgi
 import cgitb
-import requests
-import sys
 import os
 import urllib.parse
 
-
-cgitb.enable()
-
-
-req_params = cgi.parse()
-keyword = req_params["keyword"][0]
+sys.path.append(os.path.join(os.path.dirname(__file__), '../'))
+from util import get_logger, cgi_debug_wrapper, default_cgi_request_header, process_cgi_request
 
 
-headers={
-    e[5:].replace("_", "-"): v
-    for e, v in os.environ.items()
-    if e in [
-        "HTTP_USER_AGENT",
-        "HTTP_ACCEPT",
-        "HTTP_ACCEPT_ENCODING",
-        "HTTP_ACCEPT_LANGUAGE",
-        "HTTP_COOKIE",
-        "HTTP_CONNECTION",
-        "HTTP_UPGRADE_INSECURE_REQUESTS",
-        "HTTP_REFERER",
-        "HTTP_PRAGMA",
-        "HTTP_CACHE_CONTROL",
-    ]
-}
-headers["Accept-Encoding"] = ""
+logger = get_logger(logger_name=os.path.abspath(__file__).split("/")[-2], output_dir="./")
 
 
-r = requests.get(
-    url="https://shopping.yahoo.co.jp/search?p={}".format(urllib.parse.quote(keyword)),
-    headers=headers,
-    timeout=25,
-)
+@cgi_debug_wrapper
+def main():
+    cgitb.enable()
 
-for k, v in r.headers.items():
-    print ("{}: {}".format(k, v))
+    req_params = cgi.parse()
+    keyword = req_params["keyword"][0]
 
-print("", flush=True) 
-sys.stdout.buffer.write(r.content)
+    process_cgi_request(
+        url="https://shopping.yahoo.co.jp/search?p={}".format(urllib.parse.quote(keyword)),
+        headers=default_cgi_request_header(),
+    )
+
+    logger.info("success: keyword: {}".format(keyword))
+
+
+if __name__ == '__main__':
+    main()
+
