@@ -30,10 +30,10 @@ def main():
         keyword=keyword,
         checked_object="checked" if search_type == 0 else "",
         checked_kitchen="checked" if search_type == 1 else "",
-        page1="http://www.ftumn.shop/multi_search/cgi-bin/rakuten?keyword=" + keyword,
-        page2="http://www.ftumn.shop/multi_search/cgi-bin/amazon?keyword=" + keyword,
-        page3="http://www.ftumn.shop/multi_search/cgi-bin/yahoo?keyword=" + keyword,
-        page4="http://www.ftumn.shop/multi_search/cgi-bin/kakaku?keyword=" + keyword,
+        page1="http://www.ftumn.shop/multi_search/cgi-bin/engine/rakuten?keyword=" + keyword,
+        page2="http://www.ftumn.shop/multi_search/cgi-bin/engine/amazon?keyword=" + keyword,
+        page3="http://www.ftumn.shop/multi_search/cgi-bin/engine/yahoo?keyword=" + keyword,
+        page4="http://www.ftumn.shop/multi_search/cgi-bin/engine/kakaku?keyword=" + keyword,
     )
 
     print("Content-Type: text/html")
