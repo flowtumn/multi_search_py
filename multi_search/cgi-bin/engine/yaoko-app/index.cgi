@@ -1,4 +1,4 @@
-﻿#!/virtual/ftumn/dev/venv/bin/python3
+#!/virtual/ftumn/dev/venv/bin/python3
 # -*- coding: UTF-8 -*-
 import sys
 import cgi
@@ -18,10 +18,10 @@ def main():
     cgitb.enable()
 
     req_params = cgi.parse()
-    keyword = req_params["keyword"][0]
+    page = int(req_params["page"][0])
 
     process_cgi_request(
-        url="https://app.yaoko-app.com/flyer/1095/",
+        url="https://app.yaoko-app.com/flyer/1095/?page={}".format(page),
         headers=default_cgi_request_header(),
     )
 
@@ -30,4 +30,5 @@ def main():
 
 if __name__ == '__main__':
     main()
+
 

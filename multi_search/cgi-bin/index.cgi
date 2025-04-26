@@ -25,11 +25,10 @@ def main():
     search_type = int(req_params["search_type"][0])
     keyword = req_params["keyword"][0]
 
-    tp = Template(read_all("../templates/search.jinja"))
-
-    def _render():
+    def _render() -> str:
         if search_type == 0:
-            output = tp.render(
+            tp = Template(read_all("../templates/search.jinja"))
+            return tp.render(
                 keyword=keyword,
                 checked_object="checked",
                 checked_kitchen="",
@@ -39,14 +38,17 @@ def main():
                 page4="http://www.ftumn.shop/multi_search/cgi-bin/engine/kakaku?keyword=" + keyword,
             )
         elif search_type == 1:
-            output = tp.render(
+            tp = Template(read_all("../templates/search_food.jinja"))
+            return tp.render(
                 keyword=keyword,
                 checked_object="",
                 checked_kitchen="checked",
-                page1="https://sunbelx.com/upload/Flyer/files/e_f_1515_680ab45c-e41c-417d-ae3c-6e965583d00e.pdf",
-                page2="http://www.ftumn.shop/multi_search/cgi-bin/engine/yaoko-app?keyword=" + keyword,
-                page3="https://cms.mechao.tv/rogers/viewer?id=31486958&eid=65818e288ac03407f7aa82334b4c5201&sid=316a43b430d2601184ed08a42ba89a1e",
-                page4="https://cms.mechao.tv/rogers/viewer?id=31486959&eid=4866d30fcab39fad03fbace29b9fbcb8&sid=7c7baf086a80ff8fa1cd6aac0ec9eea8",
+#                page1="https://sunbelx.com/upload/Flyer/files/e_f_1515_680ab45c-e41c-417d-ae3c-6e965583d00e.pdf",
+                page1="https://docs.google.com/viewer?url=https://sunbelx.com/upload/Flyer/files/e_f_1515_680ab45c-e41c-417d-ae3c-6e965583d00e.pdf&embedded=true",
+                page2="https://cms.mechao.tv/rogers/viewer?id=31486958&eid=65818e288ac03407f7aa82334b4c5201&sid=316a43b430d2601184ed08a42ba89a1e",
+                page3="https://cms.mechao.tv/rogers/viewer?id=31486959&eid=4866d30fcab39fad03fbace29b9fbcb8&sid=7c7baf086a80ff8fa1cd6aac0ec9eea8",
+                page4="http://www.ftumn.shop/multi_search/cgi-bin/engine/yaoko-app?page=1",
+                page5="http://www.ftumn.shop/multi_search/cgi-bin/engine/yaoko-app?page=2",
             )
         else:
             return "Unsupported search_type"
@@ -60,4 +62,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
