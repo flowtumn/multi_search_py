@@ -32,10 +32,10 @@ def main():
                 keyword=keyword,
                 checked_object="checked",
                 checked_kitchen="",
-                page1="http://www.ftumn.shop/multi_search/cgi-bin/engine/rakuten?keyword=" + keyword,
-                page2="http://www.ftumn.shop/multi_search/cgi-bin/engine/amazon?keyword=" + keyword,
-                page3="http://www.ftumn.shop/multi_search/cgi-bin/engine/yahoo?keyword=" + keyword,
-                page4="http://www.ftumn.shop/multi_search/cgi-bin/engine/kakaku?keyword=" + keyword,
+                page1="http://www.ftumn.shop/multi_search/cgi-bin/engine/general?url={}".format(urllib.parse.quote("https://search.rakuten.co.jp/search/mall/{}".format(keyword))),
+                page2="http://www.ftumn.shop/multi_search/cgi-bin/engine/general?url={}".format(urllib.parse.quote("https://www.maruo.co.jp/_hmas/hmas2.aspx?k={}".format(keyword))),
+                page3="http://www.ftumn.shop/multi_search/cgi-bin/engine/general?url={}".format(urllib.parse.quote("https://shopping.yahoo.co.jp/search?p={}".format(keyword))),
+                page4="http://www.ftumn.shop/multi_search/cgi-bin/engine/general?url={}".format(urllib.parse.quote("https://search.kakaku.com/{}".format(keyword))),
             )
         elif search_type == 1:
             tp = Template(read_all("../templates/search_food.jinja"))
