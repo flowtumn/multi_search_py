@@ -1,0 +1,24 @@
+<html>
+  <head>
+    <meta charset="UTF-8"> 
+  </head>
+
+  <body>
+    <div align="right">
+      <form action="http://www.ftumn.shop/multi_search/cgi-bin" method="GET">
+        Search Keyword:<input name="keyword" id="keyword" type="text" value="{{ keyword }}">
+        <input type="radio" name="search_type" value="0" {{ checked_object }}>物
+        <input type="radio" name="search_type" value="1" {{ checked_kitchen }}>食材
+        <input type="submit" value="Search">
+      </form>
+    </div>
+
+    <div align="center">
+      <iframe width="80%" height="45%" src="{{ page1 }}"></iframe>
+      <iframe width="40%" height="45%" src="{{ page2 }}"></iframe>
+      <iframe width="40%" height="45%" src="{{ page3 }}"></iframe>
+      <iframe width="40%" height="45%" src="{{ page4 }}"></iframe>
+      <iframe width="40%" height="45%" src="{{ page5 }}"></iframe>
+    </div>
+  </body>
+</html>
